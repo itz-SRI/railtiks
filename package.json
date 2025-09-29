@@ -1,0 +1,9 @@
+{
+    "name": "railtiks-frontend",
+    "version": "1.0.0",
+    "description": "Static frontend for Railtiks project.",
+    "scripts": {
+      "build": "echo 'Building static site'",
+      "deploy": "echo 'Deploy complete'"
+    }
+  }
