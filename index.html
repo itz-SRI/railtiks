@@ -12,11 +12,11 @@
             theme: {
                 extend: {
                     colors: {
-                        // New Blue/White Theme Palette
-                        'rail-primary': '#2563eb', // Deep Blue (Accent/Primary Button)
-                        'rail-dark': '#1f2937',    // Dark Text Color
-                        'rail-light': '#f8fafc',   // Light Background
-                        'rail-card': '#ffffff',    // White Card Background
+                        // New Dark Theme Palette
+                        'rail-primary': '#60a5fa', // Bright Blue (Accent)
+                        'rail-dark': '#e2e8f0',    // Light Text Color
+                        'rail-light': '#1e293b',   // Dark Background
+                        'rail-card': '#334155',    // Dark Card Background
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -27,54 +27,57 @@
     </script>
     <style>
         body {
-            /* Set light background and dark text globally */
-            background-color: #f8fafc; /* rail-light */
-            color: #1f2937; /* rail-dark */
+            /* Set dark background and light text globally */
+            background-color: #1e293b; /* rail-light */
+            color: #e2e8f0; /* rail-dark */
             font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s;
         }
-        /* Custom scrollbar for light mode aesthetics */
+        /* Custom scrollbar for dark mode aesthetics */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-thumb {
-            background: #94a3b8; /* Light gray scrollbar */
+            background: #475569; /* Darker gray scrollbar */
             border-radius: 10px;
         }
     </style>
 </head>
 <body class="flex flex-col items-center justify-center min-h-screen p-4 md:p-8">
 
-    <!-- Global Message Area (Placed outside containers to be accessible everywhere) -->
+    <!-- Global Message Area -->
     <div id="message-box" class="w-full max-w-5xl p-4 mb-6 rounded-lg shadow-xl hidden fixed top-0 mt-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-300">
         <p id="message-content" class="font-semibold"></p>
     </div>
 
     <!-- 1. LOGIN PAGE (Visible by default) -->
-    <div id="login-page" class="w-full max-w-md p-8 bg-rail-card rounded-xl shadow-xl border border-gray-200 transition-opacity duration-500">
+    <div id="login-page" class="w-full max-w-md p-8 bg-rail-card rounded-xl shadow-xl border border-gray-700 transition-opacity duration-500">
         <div class="text-center mb-8">
-            <!-- LOGO: Large version for the login page -->
-            <img src="https://raw.githubusercontent.com/itz-SRI/railtiks/refs/heads/main/raiLtiKs.png" alt="Railtiks Logo" 
+            <!-- LOGO: Large version for the login page (Placeholder: Change 'src' to your logo URL) -->
+            <img src="https://raw.githubusercontent.com/itz-SRI/railtiks/main/raiLtiKs.png" alt="Railtiks Logo" 
                  class="h-16 w-16 inline-block mb-3 rounded-lg shadow-md border border-rail-primary/50">
             <!-- END LOGO -->
             
             <h1 class="text-4xl font-extrabold text-rail-primary">Railtiks</h1>
-            <p class="text-gray-600 mt-2">AI-Powered Traffic Control Login</p>
+            <p class="text-gray-400 mt-2">AI-Powered Traffic Control Login</p>
         </div>
 
         <form id="login-form" class="space-y-6">
             <div>
-                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                <input type="text" id="username" required class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800 focus:ring-rail-primary focus:border-rail-primary transition duration-150">
+                <label for="username" class="block text-sm font-medium text-rail-dark">Username</label>
+                <!-- FIX: Removed value="admin" -->
+                <input type="text" id="username" required class="w-full mt-1 p-3 bg-gray-600/30 border border-gray-700 rounded-lg text-rail-dark placeholder-gray-500 focus:ring-rail-primary focus:border-rail-primary transition duration-150">
             </div>
             <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <input type="password" id="password" required class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800 focus:ring-rail-primary focus:border-rail-primary transition duration-150">
+                <label for="password" class="block text-sm font-medium text-rail-dark">Password</label>
+                <!-- FIX: Removed value="password" -->
+                <input type="password" id="password" required class="w-full mt-1 p-3 bg-gray-600/30 border border-gray-700 rounded-lg text-rail-dark placeholder-gray-500 focus:ring-rail-primary focus:border-rail-primary transition duration-150">
             </div>
             
             <button type="submit" class="w-full py-3 bg-rail-primary hover:bg-blue-600 text-white font-bold rounded-lg shadow-lg transition duration-200">
                 Log In to Dashboard
             </button>
-            <!-- <p class="text-center text-xs text-gray-500">Hint: Use 'admin' and 'password'</p> -->
+            <!-- REMOVED HINT TEXT -->
         </form>
     </div>
 
@@ -85,52 +88,52 @@
         <!-- Header -->
         <header class="w-full max-w-5xl text-center mb-8">
             <h1 class="text-4xl md:text-5xl font-extrabold text-rail-primary drop-shadow-lg">
-                <!-- LOGO: Small version for the dashboard header -->
-                <img src="https://raw.githubusercontent.com/itz-SRI/railtiks/refs/heads/main/raiLtiKs.png" alt="Railtiks Logo" 
-                     class="h-12 w-12 inline-block mr-3 mb-1 rounded-full border border-rail-primary">
+                <!-- LOGO: Small version for the dashboard header (Placeholder: Change 'src' to your logo URL) -->
+                <img src="https://raw.githubusercontent.com/itz-SRI/railtiks/main/raiLtiKs.png" alt="Railtiks Logo" 
+                     class="h-14 w-14 inline-block mr-3 mb-1 rounded-full border border-rail-primary">
                 <!-- END LOGO -->
                 Railtiks: AI Train Traffic Control
             </h1>
-            <p class="text-gray-600 mt-2 text-lg">Real-time status updates and automated decision-making interface.</p>
+            <p class="text-gray-400 mt-2 text-lg">Real-time status updates and automated decision-making interface.</p>
         </header>
 
         <!-- Two-Column Layout for Desktop, Stacked for Mobile -->
         <main class="w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
 
             <!-- Card 1: Report Train Status (POST) -->
-            <div class="bg-rail-card p-6 rounded-xl shadow-lg border border-gray-200">
+            <div class="bg-rail-card p-6 rounded-xl shadow-lg border border-gray-700">
                 <h2 class="text-2xl font-bold mb-4 border-b pb-2 border-rail-primary/50 text-rail-primary">1. Report Real-Time Status</h2>
-                <p class="text-sm text-gray-600 mb-4">Simulate a train sending its current telemetry data to the AI backend.</p>
+                <p class="text-gray-400 mb-4">Simulate a train sending its current telemetry data to the AI backend.</p>
 
                 <form id="status-form" class="space-y-4">
                     <div>
-                        <label for="train-id-post" class="block text-sm font-medium text-gray-700">Train ID (e.g., T-101)</label>
-                        <input type="text" id="train-id-post" value="T-101" required class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800 focus:ring-rail-primary focus:border-rail-primary transition duration-150">
+                        <label for="train-id-post" class="block text-sm font-medium text-rail-dark">Train ID (e.g., T-101)</label>
+                        <input type="text" id="train-id-post" value="T-101" required class="w-full mt-1 p-3 bg-gray-600/30 border border-gray-700 rounded-lg text-rail-dark focus:ring-rail-primary focus:border-rail-primary transition duration-150">
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label for="location" class="block text-sm font-medium text-gray-700">Current Location</label>
-                            <input type="text" id="location" value="Milepost 42" required class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800">
+                            <label for="location" class="block text-sm font-medium text-rail-dark">Current Location</label>
+                            <input type="text" id="location" value="Milepost 42" required class="w-full mt-1 p-3 bg-gray-600/30 border border-gray-700 rounded-lg text-rail-dark">
                         </div>
                         <div>
-                            <label for="speed" class="block text-sm font-medium text-gray-700">Speed (km/h)</label>
-                            <input type="number" id="speed" value="120" required class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800">
+                            <label for="speed" class="block text-sm font-medium text-rail-dark">Speed (km/h)</label>
+                            <input type="number" id="speed" value="120" required class="w-full mt-1 p-3 bg-gray-600/30 border border-gray-700 rounded-lg text-rail-dark">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label for="status" class="block text-sm font-medium text-gray-700">Operational Status</label>
-                            <select id="status" required class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800 appearance-none">
+                            <label for="status" class="block text-sm font-medium text-rail-dark">Operational Status</label>
+                            <select id="status" required class="w-full mt-1 p-3 bg-gray-600/30 border border-gray-700 rounded-lg text-rail-dark appearance-none">
                                 <option>On Time</option>
                                 <option>Delayed</option>
                                 <option>Idle</option>
                             </select>
                         </div>
                         <div>
-                            <label for="delay-minutes" class="block text-sm font-medium text-gray-700">Delay (Minutes)</label>
-                            <input type="number" id="delay-minutes" value="0" class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800">
+                            <label for="delay-minutes" class="block text-sm font-medium text-rail-dark">Delay (Minutes)</label>
+                            <input type="number" id="delay-minutes" value="0" class="w-full mt-1 p-3 bg-gray-600/30 border border-gray-700 rounded-lg text-rail-dark">
                         </div>
                     </div>
 
@@ -145,14 +148,14 @@
             </div>
 
             <!-- Card 2: Get Optimization Decision (GET) -->
-            <div class="bg-rail-card p-6 rounded-xl shadow-lg border border-gray-200">
+            <div class="bg-rail-card p-6 rounded-xl shadow-lg border border-gray-700">
                 <h2 class="text-2xl font-bold mb-4 border-b pb-2 border-rail-primary/50 text-rail-primary">2. Get AI Decision</h2>
-                <p class="text-sm text-gray-600 mb-4">Request the AI's optimal traffic control action for a specific train.</p>
+                <p class="text-gray-400 mb-4">Request the AI's optimal traffic control action for a specific train.</p>
 
                 <div class="space-y-4">
                     <div>
-                        <label for="train-id-get" class="block text-sm font-medium text-gray-700">Train ID (e.g., T-101)</label>
-                        <input type="text" id="train-id-get" value="T-205" required class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800 focus:ring-rail-primary focus:border-rail-primary transition duration-150">
+                        <label for="train-id-get" class="block text-sm font-medium text-rail-dark">Train ID (e.g., T-101)</label>
+                        <input type="text" id="train-id-get" value="T-205" required class="w-full mt-1 p-3 bg-gray-600/30 border border-gray-700 rounded-lg text-rail-dark focus:ring-rail-primary focus:border-rail-primary transition duration-150">
                     </div>
 
                     <button onclick="getDecision()" class="w-full py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-bold rounded-lg shadow-lg transition duration-200 flex items-center justify-center" id="decision-button">
@@ -165,11 +168,11 @@
                 </div>
 
                 <!-- Decision Display Area -->
-                <div id="decision-result" class="mt-6 p-4 border border-blue-200 rounded-lg bg-blue-50 shadow-inner">
+                <div id="decision-result" class="mt-6 p-4 border border-blue-400/50 rounded-lg bg-blue-900/20 shadow-inner">
                     <h3 class="text-xl font-semibold mb-2 text-rail-primary">AI Decision Result:</h3>
-                    <p class="text-gray-700"><span class="font-bold text-lg">Action:</span> <span id="decision-action" class="text-red-500 font-mono">...Pending...</span></p>
-                    <p class="text-gray-700"><span class="font-bold">Reason:</span> <span id="decision-reason">Awaiting request for optimal action.</span></p>
-                    <p class="text-gray-700"><span class="font-bold">Impact:</span> <span id="decision-impact">0.0 min</span></p>
+                    <p class="text-rail-dark"><span class="font-bold text-lg">Action:</span> <span id="decision-action" class="text-red-400 font-mono">...Pending...</span></p>
+                    <p class="text-rail-dark"><span class="font-bold">Reason:</span> <span id="decision-reason">Awaiting request for optimal action.</span></p>
+                    <p class="text-rail-dark"><span class="font-bold">Impact:</span> <span id="decision-impact">0.0 min</span></p>
                 </div>
             </div>
 
@@ -182,7 +185,8 @@
 
 
     <script>
-        const API_BASE_URL = 'https://railtiks.vercel.app/';
+        // NOTE: This MUST be updated to your public FastAPI URL after deployment!
+        const API_BASE_URL = 'https://railtiks.vercel.app/'; 
 
         // --- CREDENTIALS CONFIGURATION ---
         const VALID_USERNAME = 'admin';
@@ -199,8 +203,8 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
-            // Placeholder validation
-            if (username === 'admin' && password === 'password') {
+            // Check against configured constants
+            if (username === VALID_USERNAME && password === VALID_PASSWORD) {
                 showMessage('success', 'Login successful! Redirecting to dashboard...');
                 
                 // Hide login, show dashboard
@@ -211,7 +215,7 @@
                 document.body.classList.remove('justify-center'); 
 
             } else {
-                showMessage('error', 'Invalid credentials. Please use the hint provided.');
+                showMessage('error', 'Invalid credentials.');
             }
         }
 
@@ -244,7 +248,7 @@
             }, 5000);
         }
 
-        // --- 1. POST Status Function (Unchanged) ---
+        // --- 1. POST Status Function ---
         document.getElementById('status-form').addEventListener('submit', function(e) {
             e.preventDefault();
             postStatus();
@@ -270,22 +274,36 @@
             button.disabled = true;
 
             try {
-                const response = await fetch(`${API_BASE_URL}/train_status`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                });
+                // Implementing exponential backoff for API calls
+                const maxRetries = 5;
+                let delay = 1000;
+                
+                for (let i = 0; i < maxRetries; i++) {
+                    const response = await fetch(`${API_BASE_URL}/train_status`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                    });
 
-                const result = await response.json();
-
-                if (response.ok) {
-                    showMessage('success', `SUCCESS: Status for Train ${result.train_id} received by backend.`);
-                } else {
-                    showMessage('error', `ERROR (${response.status}): ${result.detail || 'Failed to send status.'}`);
+                    if (response.ok) {
+                        const result = await response.json();
+                        showMessage('success', `SUCCESS: Status for Train ${result.train_id} received by backend.`);
+                        return; // Exit function on success
+                    } else if (response.status === 429 && i < maxRetries - 1) {
+                        // Retry on Too Many Requests (429)
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2; // Exponential backoff
+                        continue;
+                    } else {
+                        // Handle final non-success or non-retryable error
+                        const result = await response.json();
+                        showMessage('error', `ERROR (${response.status}): ${result.detail || 'Failed to send status.'}`);
+                        return;
+                    }
                 }
-
+                
             } catch (error) {
                 console.error('Fetch error:', error);
                 showMessage('error', `NETWORK ERROR: Could not connect to FastAPI backend at ${API_BASE_URL}.`);
@@ -297,7 +315,9 @@
             }
         }
 
-        // --- 2. GET Decision Function (Unchanged) ---
+        // --- 2. GET Decision Function ---
+        document.getElementById('decision-button').addEventListener('click', getDecision);
+
         async function getDecision() {
             const trainId = document.getElementById('train-id-get').value;
             if (!trainId) {
@@ -319,25 +339,38 @@
 
 
             try {
-                const response = await fetch(`${API_BASE_URL}/optimize/${trainId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
+                // Implementing exponential backoff for API calls
+                const maxRetries = 5;
+                let delay = 1000;
+                
+                for (let i = 0; i < maxRetries; i++) {
+                    const response = await fetch(`${API_BASE_URL}/optimize/${trainId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                        }
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        showMessage('success', `DECISION RECEIVED: Optimal action for Train ${trainId} calculated.`);
+                        document.getElementById('decision-action').textContent = result.action;
+                        document.getElementById('decision-reason').textContent = result.reason;
+                        document.getElementById('decision-impact').textContent = `${result.estimated_impact_minutes} min`;
+                        return; // Exit function on success
+                    } else if (response.status === 429 && i < maxRetries - 1) {
+                        // Retry on Too Many Requests (429)
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2; // Exponential backoff
+                        continue;
+                    } else {
+                        // Handle final non-success or non-retryable error
+                        const result = await response.json();
+                        showMessage('error', `ERROR (${response.status}): ${result.detail || 'Failed to get decision.'}`);
+                        document.getElementById('decision-action').textContent = 'ERROR';
+                        document.getElementById('decision-reason').textContent = result.detail || 'Check FastAPI logs.';
+                        return;
                     }
-                });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    showMessage('success', `DECISION RECEIVED: Optimal action for Train ${trainId} calculated.`);
-                    document.getElementById('decision-action').textContent = result.action;
-                    document.getElementById('decision-reason').textContent = result.reason;
-                    document.getElementById('decision-impact').textContent = `${result.estimated_impact_minutes} min`;
-
-                } else {
-                    showMessage('error', `ERROR (${response.status}): ${result.detail || 'Failed to get decision.'}`);
-                    document.getElementById('decision-action').textContent = 'ERROR';
-                    document.getElementById('decision-reason').textContent = result.detail || 'Check FastAPI logs.';
                 }
 
             } catch (error) {
