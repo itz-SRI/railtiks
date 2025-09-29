@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/train_control_dashboard.html"
+      "dest": "/index.html"
     }
   ]
 }
