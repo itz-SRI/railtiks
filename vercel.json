@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/Users/aaravarsh/Desktop/techtiks/railtiks/train_control_dashboard.html"
+      "dest": "/train_control_dashboard.html"
     }
   ]
 }
