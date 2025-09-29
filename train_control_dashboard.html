@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railtiks: AI Train Traffic Control System</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind for custom colors and Inter font -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // New Blue/White Theme Palette
+                        'rail-primary': '#2563eb', // Deep Blue (Accent/Primary Button)
+                        'rail-dark': '#1f2937',    // Dark Text Color
+                        'rail-light': '#f8fafc',   // Light Background
+                        'rail-card': '#ffffff',    // White Card Background
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            /* Set light background and dark text globally */
+            background-color: #f8fafc; /* rail-light */
+            color: #1f2937; /* rail-dark */
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for light mode aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8; /* Light gray scrollbar */
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4 md:p-8">
+
+    <!-- Global Message Area (Placed outside containers to be accessible everywhere) -->
+    <div id="message-box" class="w-full max-w-5xl p-4 mb-6 rounded-lg shadow-xl hidden fixed top-0 mt-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-300">
+        <p id="message-content" class="font-semibold"></p>
+    </div>
+
+    <!-- 1. LOGIN PAGE (Visible by default) -->
+    <div id="login-page" class="w-full max-w-md p-8 bg-rail-card rounded-xl shadow-xl border border-gray-200 transition-opacity duration-500">
+        <div class="text-center mb-8">
+            <!-- LOGO: Large version for the login page -->
+            <img src="https://placehold.co/64x64/2563eb/ffffff?text=RT" alt="Railtiks Logo" 
+                 class="h-16 w-16 inline-block mb-3 rounded-lg shadow-md border border-rail-primary/50">
+            <!-- END LOGO -->
+            
+            <h1 class="text-4xl font-extrabold text-rail-primary">Railtiks</h1>
+            <p class="text-gray-600 mt-2">AI-Powered Traffic Control Login</p>
+        </div>
+
+        <form id="login-form" class="space-y-6">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                <input type="text" id="username" value="admin" required class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800 focus:ring-rail-primary focus:border-rail-primary transition duration-150">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" value="password" required class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800 focus:ring-rail-primary focus:border-rail-primary transition duration-150">
+            </div>
+            
+            <button type="submit" class="w-full py-3 bg-rail-primary hover:bg-blue-600 text-white font-bold rounded-lg shadow-lg transition duration-200">
+                Log In to Dashboard
+            </button>
+            <p class="text-center text-xs text-gray-500">Hint: Use 'admin' and 'password'</p>
+        </form>
+    </div>
+
+
+    <!-- 2. MAIN DASHBOARD (Initially Hidden) -->
+    <div id="main-dashboard" class="hidden w-full max-w-5xl flex flex-col items-center">
+        
+        <!-- Header -->
+        <header class="w-full max-w-5xl text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-rail-primary drop-shadow-lg">
+                <!-- LOGO: Small version for the dashboard header -->
+                <img src="https://placehold.co/32x32/2563eb/ffffff?text=RT" alt="Railtiks Logo" 
+                     class="h-8 w-8 inline-block mr-3 mb-1 rounded-full border border-rail-primary">
+                <!-- END LOGO -->
+                Railtiks: AI Train Traffic Control
+            </h1>
+            <p class="text-gray-600 mt-2 text-lg">Real-time status updates and automated decision-making interface.</p>
+        </header>
+
+        <!-- Two-Column Layout for Desktop, Stacked for Mobile -->
+        <main class="w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            <!-- Card 1: Report Train Status (POST) -->
+            <div class="bg-rail-card p-6 rounded-xl shadow-lg border border-gray-200">
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2 border-rail-primary/50 text-rail-primary">1. Report Real-Time Status</h2>
+                <p class="text-sm text-gray-600 mb-4">Simulate a train sending its current telemetry data to the AI backend.</p>
+
+                <form id="status-form" class="space-y-4">
+                    <div>
+                        <label for="train-id-post" class="block text-sm font-medium text-gray-700">Train ID (e.g., T-101)</label>
+                        <input type="text" id="train-id-post" value="T-101" required class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800 focus:ring-rail-primary focus:border-rail-primary transition duration-150">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="location" class="block text-sm font-medium text-gray-700">Current Location</label>
+                            <input type="text" id="location" value="Milepost 42" required class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800">
+                        </div>
+                        <div>
+                            <label for="speed" class="block text-sm font-medium text-gray-700">Speed (km/h)</label>
+                            <input type="number" id="speed" value="120" required class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="status" class="block text-sm font-medium text-gray-700">Operational Status</label>
+                            <select id="status" required class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800 appearance-none">
+                                <option>On Time</option>
+                                <option>Delayed</option>
+                                <option>Idle</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="delay-minutes" class="block text-sm font-medium text-gray-700">Delay (Minutes)</label>
+                            <input type="number" id="delay-minutes" value="0" class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-3 mt-4 bg-rail-primary hover:bg-blue-600 text-white font-bold rounded-lg shadow-lg transition duration-200 flex items-center justify-center" id="status-button">
+                        <span id="status-button-text">Send Status to AI Backend</span>
+                        <svg id="status-spinner" class="animate-spin h-5 w-5 text-white ml-2 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Card 2: Get Optimization Decision (GET) -->
+            <div class="bg-rail-card p-6 rounded-xl shadow-lg border border-gray-200">
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2 border-rail-primary/50 text-rail-primary">2. Get AI Decision</h2>
+                <p class="text-sm text-gray-600 mb-4">Request the AI's optimal traffic control action for a specific train.</p>
+
+                <div class="space-y-4">
+                    <div>
+                        <label for="train-id-get" class="block text-sm font-medium text-gray-700">Train ID (e.g., T-101)</label>
+                        <input type="text" id="train-id-get" value="T-205" required class="w-full mt-1 p-3 bg-white border border-gray-300 rounded-lg text-gray-800 focus:ring-rail-primary focus:border-rail-primary transition duration-150">
+                    </div>
+
+                    <button onclick="getDecision()" class="w-full py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-bold rounded-lg shadow-lg transition duration-200 flex items-center justify-center" id="decision-button">
+                        <span id="decision-button-text">Request Optimization Decision</span>
+                        <svg id="decision-spinner" class="animate-spin h-5 w-5 text-white ml-2 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Decision Display Area -->
+                <div id="decision-result" class="mt-6 p-4 border border-blue-200 rounded-lg bg-blue-50 shadow-inner">
+                    <h3 class="text-xl font-semibold mb-2 text-rail-primary">AI Decision Result:</h3>
+                    <p class="text-gray-700"><span class="font-bold text-lg">Action:</span> <span id="decision-action" class="text-red-500 font-mono">...Pending...</span></p>
+                    <p class="text-gray-700"><span class="font-bold">Reason:</span> <span id="decision-reason">Awaiting request for optimal action.</span></p>
+                    <p class="text-gray-700"><span class="font-bold">Impact:</span> <span id="decision-impact">0.0 min</span></p>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="mt-12 text-center text-gray-500 text-sm w-full">
+            Railtiks Interface | Backend: FastAPI | Frontend: Tailwind CSS & JavaScript
+        </footer>
+    </div>
+
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8000/api/v1';
+        
+        // --- Core Login Functionality ---
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleLogin();
+        });
+
+        function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Placeholder validation
+            if (username === 'admin' && password === 'password') {
+                showMessage('success', 'Login successful! Redirecting to dashboard...');
+                
+                // Hide login, show dashboard
+                document.getElementById('login-page').classList.add('hidden');
+                document.getElementById('main-dashboard').classList.remove('hidden');
+
+                // Adjust body class to restore standard dashboard layout flow
+                document.body.classList.remove('justify-center'); 
+
+            } else {
+                showMessage('error', 'Invalid credentials. Please use the hint provided.');
+            }
+        }
+
+        // --- Helper function for UI messages ---
+        function showMessage(type, content) {
+            const box = document.getElementById('message-box');
+            const messageContent = document.getElementById('message-content');
+            
+            // Clear previous classes
+            box.className = 'w-full max-w-5xl p-4 mb-6 rounded-lg shadow-xl hidden fixed top-0 mt-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-300';
+
+            switch (type) {
+                case 'success':
+                    box.classList.add('bg-green-700', 'text-white');
+                    break;
+                case 'error':
+                    box.classList.add('bg-red-700', 'text-white');
+                    break;
+                case 'info':
+                default:
+                    box.classList.add('bg-blue-700', 'text-white');
+                    break;
+            }
+            messageContent.textContent = content;
+            box.classList.remove('hidden');
+
+            // Hide message automatically after 5 seconds
+            setTimeout(() => {
+                box.classList.add('hidden');
+            }, 5000);
+        }
+
+        // --- 1. POST Status Function (Unchanged) ---
+        document.getElementById('status-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            postStatus();
+        });
+
+        async function postStatus() {
+            const form = document.getElementById('status-form');
+            const data = {
+                train_id: form.querySelector('#train-id-post').value,
+                current_location: form.querySelector('#location').value,
+                speed_kmh: parseFloat(form.querySelector('#speed').value),
+                status: form.querySelector('#status').value,
+                delay_minutes: parseInt(form.querySelector('#delay-minutes').value)
+            };
+            
+            const button = document.getElementById('status-button');
+            const buttonText = document.getElementById('status-button-text');
+            const spinner = document.getElementById('status-spinner');
+            
+            // Show loading state
+            buttonText.textContent = 'Sending...';
+            spinner.classList.remove('hidden');
+            button.disabled = true;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/train_status`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage('success', `SUCCESS: Status for Train ${result.train_id} received by backend.`);
+                } else {
+                    showMessage('error', `ERROR (${response.status}): ${result.detail || 'Failed to send status.'}`);
+                }
+
+            } catch (error) {
+                console.error('Fetch error:', error);
+                showMessage('error', `NETWORK ERROR: Could not connect to FastAPI backend at ${API_BASE_URL}.`);
+            } finally {
+                // Hide loading state
+                buttonText.textContent = 'Send Status to AI Backend';
+                spinner.classList.add('hidden');
+                button.disabled = false;
+            }
+        }
+
+        // --- 2. GET Decision Function (Unchanged) ---
+        async function getDecision() {
+            const trainId = document.getElementById('train-id-get').value;
+            if (!trainId) {
+                showMessage('info', 'Please enter a Train ID to request a decision.');
+                return;
+            }
+
+            const button = document.getElementById('decision-button');
+            const buttonText = document.getElementById('decision-button-text');
+            const spinner = document.getElementById('decision-spinner');
+            
+            // Show loading state
+            buttonText.textContent = 'Requesting...';
+            spinner.classList.remove('hidden');
+            button.disabled = true;
+            document.getElementById('decision-action').textContent = '...Calculating...';
+            document.getElementById('decision-reason').textContent = 'Waiting for AI response.';
+            document.getElementById('decision-impact').textContent = '...';
+
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/optimize/${trainId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage('success', `DECISION RECEIVED: Optimal action for Train ${trainId} calculated.`);
+                    document.getElementById('decision-action').textContent = result.action;
+                    document.getElementById('decision-reason').textContent = result.reason;
+                    document.getElementById('decision-impact').textContent = `${result.estimated_impact_minutes} min`;
+
+                } else {
+                    showMessage('error', `ERROR (${response.status}): ${result.detail || 'Failed to get decision.'}`);
+                    document.getElementById('decision-action').textContent = 'ERROR';
+                    document.getElementById('decision-reason').textContent = result.detail || 'Check FastAPI logs.';
+                }
+
+            } catch (error) {
+                console.error('Fetch error:', error);
+                showMessage('error', `NETWORK ERROR: Could not connect to FastAPI backend at ${API_BASE_URL}.`);
+                document.getElementById('decision-action').textContent = 'NETWORK FAILURE';
+                document.getElementById('decision-reason').textContent = `Ensure FastAPI is running.`;
+            } finally {
+                // Hide loading state
+                buttonText.textContent = 'Request Optimization Decision';
+                spinner.classList.add('hidden');
+                button.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
